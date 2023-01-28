@@ -2,10 +2,9 @@ import "./App.css"
 import Cards from "./components/Cards/Cards"
 import NavBar from "./components/NavBar/NavBar"
 import "semantic-ui-css/semantic.min.css"
-import React, { useState } from "react"
-
-function App() {
-  const [fruitObjects, setFruitObjects] = useState([
+import React, { useReducer, useState } from "react"
+const initialState = {
+  fruitObjects: [
     {
       name: "Apple",
       image:
@@ -105,12 +104,50 @@ function App() {
       isLiked: false,
       quantity: 0,
     },
-  ])
-  const [carts, setCarts] = useState([])
+  ],
+  carts: [],
+}
+const reducer = (state, actions) => {
+  switch (actions.type) {
+    case "SET_LIST": {
+      return {
+        ...state,
+        fruitObjects: actions.value,
+      }
+    }
+    case "SET_CART": {
+      return {
+        ...state,
+        carts: actions.value,
+      }
+    }
+    case "SET_VALUE": {
+      return {
+        ...state,
+        [actions.key]: actions.value,
+      }
+    }
+    default:
+      break
+  }
+}
+
+function App() {
+  const [state, dispatch] = useReducer(reducer, initialState)
   return (
     <div className="app-container">
-      <NavBar carts={carts} fruitObjects={fruitObjects}></NavBar>
-      <Cards list={fruitObjects} setList={setFruitObjects} setCarts={setCarts}></Cards>
+      <NavBar carts={state.carts}></NavBar>
+      <Cards
+        list={state.fruitObjects}
+        setList={list => {
+          // dispatch({ type: "SET_LIST", value: list })
+          dispatch({ type: "SET_VALUE", value: list, key: "fruitObjects" })
+        }}
+        setCarts={cart => {
+          // dispatch({ type: "SET_CART", value: cart })
+          dispatch({ type: "SET_VALUE", value: cart, key: "carts" })
+        }}
+      ></Cards>
     </div>
   )
 }

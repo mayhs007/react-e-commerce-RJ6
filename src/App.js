@@ -5,9 +5,10 @@ import "semantic-ui-css/semantic.min.css"
 import React, { useReducer, useState } from "react"
 import { Card, Grid } from "semantic-ui-react"
 import ThemeContext from "./components/ThemeContext"
-import { Route, Routes } from "react-router-dom"
+import { Route, Routes, useParams } from "react-router-dom"
 import Login from "./components/Login/Login"
 import { PrivateRoute } from "./Route/PrivateRoute"
+import Detail from "./components/Detail/Detail"
 const initialState = {
   fruitObjects: [],
   carts: [],
@@ -142,11 +143,12 @@ const reducer = (state, actions) => {
 function App() {
   const [state, dispatch] = useReducer(reducer, initialState)
   const [isDarkTheme, setIsDarkTheme] = useState(false)
-  setTimeout(() => {
-    if (state.fruitObjects.length === 0) {
-      dispatch({ type: "SET_VALUE", value: fruitObjects, key: "fruitObjects" })
-    }
-  }, 2000)
+  const params = useParams()
+
+  if (state.fruitObjects.length === 0) {
+    dispatch({ type: "SET_VALUE", value: fruitObjects, key: "fruitObjects" })
+  }
+
   const renderCards = () => {
     return (
       <Grid
@@ -172,6 +174,31 @@ function App() {
       </Grid>
     )
   }
+  const renderDetail = () => {
+    return (
+      <Grid
+        style={
+          isDarkTheme ? { backgroundColor: "#282C34" } : { backgroundColor: "#f2f2f2" }
+        }
+      >
+        <Grid.Row>
+          <NavBar carts={state.carts} setIsDarkTheme={setIsDarkTheme}></NavBar>
+        </Grid.Row>
+
+        <Detail
+          fruits={state.fruitObjects}
+          setList={list => {
+            // dispatch({ type: "SET_LIST", value: list })
+            dispatch({ type: "SET_VALUE", value: list, key: "fruitObjects" })
+          }}
+          setCarts={cart => {
+            // dispatch({ type: "SET_CART", value: cart })
+            dispatch({ type: "SET_VALUE", value: cart, key: "carts" })
+          }}
+        ></Detail>
+      </Grid>
+    )
+  }
   return (
     <ThemeContext.Provider value={isDarkTheme}>
       <Routes>
@@ -179,6 +206,10 @@ function App() {
         <Route
           path="/shop"
           element={<PrivateRoute>{renderCards()}</PrivateRoute>}
+        ></Route>
+        <Route
+          path="/detail/:fruitId"
+          element={<PrivateRoute>{renderDetail()}</PrivateRoute>}
         ></Route>
       </Routes>
     </ThemeContext.Provider>

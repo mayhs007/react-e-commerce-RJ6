@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
 import {
   Icon,
   Button,
@@ -15,6 +16,7 @@ import "./Cards.css"
 const Cards = ({ list, setList, setCarts }) => {
   const isDarkTheme = useContext(ThemeContext)
   const [isLoading, setLoading] = useState(false)
+  const navigate = useNavigate()
   const renderFruits = () => {
     let renderedFruits = ""
     if (isLoading === false) {
@@ -22,7 +24,11 @@ const Cards = ({ list, setList, setCarts }) => {
         return (
           <Grid.Column width={"4"} key={index}>
             <Segment as={Grid} inverted={isDarkTheme}>
-              <Grid.Row>
+              <Grid.Row
+                onClick={() => {
+                  navigate("/detail/" + index)
+                }}
+              >
                 <Grid.Column width={16}>
                   <Image src={value.image} wrapped ui fluid></Image>
                 </Grid.Column>
@@ -35,7 +41,7 @@ const Cards = ({ list, setList, setCarts }) => {
                 </Grid.Column>
                 <Grid.Column width={8} textAlign="right">
                   <Header as="h4" inverted={isDarkTheme}>
-                    {value.price}
+                    ₹{value.price}
                   </Header>
                 </Grid.Column>
               </Grid.Row>
@@ -87,6 +93,7 @@ const Cards = ({ list, setList, setCarts }) => {
     setList(updatedValue)
     setCarts(prevCart => [...prevCart, itemIndex])
   }
+
   useEffect(() => {
     if (list.length === 0) {
       setLoading(true)

@@ -1,7 +1,7 @@
 import React, { useState } from "react"
-import { Button, Form, Grid, Header, Image, Segment, Message } from "semantic-ui-react"
+import { Button, Form, Grid, Header, Segment, Message } from "semantic-ui-react"
 import Cookies from "js-cookie"
-import { Link, Navigate, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 const Login = () => {
   const [phoneNumber, setPhoneNumber] = useState("7010534782")

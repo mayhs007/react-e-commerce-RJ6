@@ -13,7 +13,7 @@ import {
 } from "semantic-ui-react"
 import ThemeContext from "../ThemeContext"
 import "./Cards.css"
-const Cards = ({ list, setList, setCarts }) => {
+const Cards = ({ list, setList, carts, setCarts }) => {
   const isDarkTheme = useContext(ThemeContext)
   const [isLoading, setLoading] = useState(false)
   const navigate = useNavigate()
@@ -91,7 +91,7 @@ const Cards = ({ list, setList, setCarts }) => {
       itemIndex === index ? { ...value, quantity: value.quantity + 1 } : { ...value }
     )
     setList(updatedValue)
-    setCarts(prevCart => [...prevCart, itemIndex])
+    setCarts([...carts, itemIndex])
   }
 
   useEffect(() => {

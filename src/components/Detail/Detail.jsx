@@ -69,9 +69,9 @@ class Detail extends React.Component {
     let updatedValue = this.props.fruits.map((value, index) =>
       itemIndex === index ? { ...value, quantity: value.quantity + 1 } : { ...value }
     )
-    console.log(updatedValue)
+
     this.props.setList(updatedValue)
-    this.props.setCarts(prevCart => [...prevCart, itemIndex])
+    this.props.setCarts([...this.props.carts, itemIndex])
   }
   static getDerivedStateFromProps(props, state) {
     return { fruit: props.fruits[parseInt(props.params.fruitId)] }

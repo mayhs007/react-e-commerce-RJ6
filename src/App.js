@@ -9,6 +9,7 @@ import { Route, Routes, useParams } from "react-router-dom"
 import Login from "./components/Login/Login"
 import { PrivateRoute } from "./Route/PrivateRoute"
 import Detail from "./components/Detail/Detail"
+import Cart from "./components/Cart/Cart"
 const initialState = {
   fruitObjects: [],
   carts: [],
@@ -124,6 +125,7 @@ const reducer = (state, actions) => {
       }
     }
     case "SET_CART": {
+      console.log(actions.value)
       return {
         ...state,
         carts: actions.value,
@@ -162,13 +164,14 @@ function App() {
 
         <Cards
           list={state.fruitObjects}
+          carts={state.carts}
           setList={list => {
             // dispatch({ type: "SET_LIST", value: list })
             dispatch({ type: "SET_VALUE", value: list, key: "fruitObjects" })
           }}
           setCarts={cart => {
-            // dispatch({ type: "SET_CART", value: cart })
-            dispatch({ type: "SET_VALUE", value: cart, key: "carts" })
+            dispatch({ type: "SET_CART", value: cart })
+            // dispatch({ type: "SET_VALUE", value: cart, key: "carts" })
           }}
         ></Cards>
       </Grid>
@@ -187,15 +190,41 @@ function App() {
 
         <Detail
           fruits={state.fruitObjects}
+          carts={state.carts}
           setList={list => {
             // dispatch({ type: "SET_LIST", value: list })
             dispatch({ type: "SET_VALUE", value: list, key: "fruitObjects" })
           }}
           setCarts={cart => {
-            // dispatch({ type: "SET_CART", value: cart })
-            dispatch({ type: "SET_VALUE", value: cart, key: "carts" })
+            dispatch({ type: "SET_CART", value: cart })
+            // dispatch({ type: "SET_VALUE", value: cart, key: "carts" })
           }}
         ></Detail>
+      </Grid>
+    )
+  }
+  const renderCart = () => {
+    return (
+      <Grid
+        style={
+          isDarkTheme ? { backgroundColor: "#282C34" } : { backgroundColor: "#f2f2f2" }
+        }
+      >
+        <Grid.Row>
+          <NavBar carts={state.carts} setIsDarkTheme={setIsDarkTheme}></NavBar>
+        </Grid.Row>
+        <Cart
+          carts={state.carts}
+          fruits={state.fruitObjects}
+          setList={list => {
+            // dispatch({ type: "SET_LIST", value: list })
+            dispatch({ type: "SET_VALUE", value: list, key: "fruitObjects" })
+          }}
+          setCart={cart => {
+            dispatch({ type: "SET_CART", value: cart })
+            // dispatch({ type: "SET_VALUE", value: cart, key: "carts" })
+          }}
+        ></Cart>
       </Grid>
     )
   }
@@ -211,6 +240,7 @@ function App() {
           path="/detail/:fruitId"
           element={<PrivateRoute>{renderDetail()}</PrivateRoute>}
         ></Route>
+        <Route path="/cart" element={<PrivateRoute>{renderCart()}</PrivateRoute>}></Route>
       </Routes>
     </ThemeContext.Provider>
   )

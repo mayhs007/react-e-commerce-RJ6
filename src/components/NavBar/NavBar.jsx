@@ -10,17 +10,20 @@ const NavBar = ({ carts, setIsDarkTheme }) => {
   return (
     <Menu attached="top" fluid inverted={isDarkTheme}>
       <Menu.Menu position="right">
-        <Menu.Item>
-          <Icon
-            style={{ cursor: "pointer" }}
-            name="home"
-            inverted={isDarkTheme}
-            onClick={() => {
-              navigate("/shop")
-            }}
-          ></Icon>
+        <Menu.Item
+          style={{ cursor: "pointer" }}
+          onClick={() => {
+            navigate("/shop")
+          }}
+        >
+          <Icon style={{ cursor: "pointer" }} name="home" inverted={isDarkTheme}></Icon>
         </Menu.Item>
-        <Menu.Item>
+        <Menu.Item
+          style={{ cursor: "pointer" }}
+          onClick={() => {
+            navigate("/cart")
+          }}
+        >
           <Icon name="shopping cart" inverted={isDarkTheme}></Icon>
           <Label>{carts ? carts.length : 0}</Label>
         </Menu.Item>

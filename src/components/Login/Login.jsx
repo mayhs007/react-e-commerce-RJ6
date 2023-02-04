@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { Button, Form, Grid, Header, Segment, Message } from "semantic-ui-react"
 import Cookies from "js-cookie"
 import { useNavigate } from "react-router-dom"
@@ -18,10 +18,12 @@ const Login = () => {
       navigate("/shop")
     }
   }
-  if (Cookies.get("isAuthenticated")) {
-    navigate("/shop")
-    return <></>
-  }
+  useEffect(() => {
+    if (Cookies.get("isAuthenticated") === true) {
+      navigate("/shop")
+    }
+  })
+
   return (
     <Grid verticalAlign="middle">
       <Grid.Row centered>

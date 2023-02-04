@@ -1,4 +1,5 @@
 import React from "react"
+import { Link } from "react-router-dom"
 import { Item, Button, Grid, Segment, Rating, Icon } from "semantic-ui-react"
 
 const Cart = ({ carts, fruits, setCart, setList }) => {
@@ -65,6 +66,18 @@ const Cart = ({ carts, fruits, setCart, setList }) => {
       </Item>
     )
   }
+  const renderCheckout = () => {
+    return (
+      <Item>
+        <Item.Extra>
+          {/* <Button floated="right" as={Link} >Checkout</Button> */}
+          <Link to="/check-out">
+            <Button floated="right">Checkout</Button>
+          </Link>
+        </Item.Extra>
+      </Item>
+    )
+  }
   return (
     <Grid.Row centered>
       <Grid.Column width={14}>
@@ -72,6 +85,7 @@ const Cart = ({ carts, fruits, setCart, setList }) => {
           <Item.Group divided>
             {renderItem()}
             {renderTotal()}
+            {renderCheckout()}
           </Item.Group>
         </Segment>
       </Grid.Column>

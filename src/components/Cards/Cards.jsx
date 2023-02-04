@@ -11,7 +11,7 @@ import {
   Loader,
   Rating,
 } from "semantic-ui-react"
-import ThemeContext from "../ThemeContext"
+import ThemeContext from "../../context/ThemeContext"
 import "./Cards.css"
 const Cards = ({ list, setList, carts, setCarts }) => {
   const isDarkTheme = useContext(ThemeContext)

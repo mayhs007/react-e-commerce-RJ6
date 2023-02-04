@@ -4,12 +4,13 @@ import NavBar from "./components/NavBar/NavBar"
 import "semantic-ui-css/semantic.min.css"
 import React, { useReducer, useState } from "react"
 import { Card, Grid } from "semantic-ui-react"
-import ThemeContext from "./components/ThemeContext"
+import ThemeContext from "./context/ThemeContext"
 import { Route, Routes, useParams } from "react-router-dom"
 import Login from "./components/Login/Login"
 import { PrivateRoute } from "./Route/PrivateRoute"
 import Detail from "./components/Detail/Detail"
 import Cart from "./components/Cart/Cart"
+import Checkout from "./components/Checkout/Checkout"
 const initialState = {
   fruitObjects: [],
   carts: [],
@@ -228,6 +229,31 @@ function App() {
       </Grid>
     )
   }
+  const renderCheckout = () => {
+    return (
+      <Grid
+        style={
+          isDarkTheme ? { backgroundColor: "#282C34" } : { backgroundColor: "#f2f2f2" }
+        }
+      >
+        <Grid.Row>
+          <NavBar carts={state.carts} setIsDarkTheme={setIsDarkTheme}></NavBar>
+        </Grid.Row>
+        <Checkout
+          carts={state.carts}
+          fruits={state.fruitObjects}
+          setList={list => {
+            // dispatch({ type: "SET_LIST", value: list })
+            dispatch({ type: "SET_VALUE", value: list, key: "fruitObjects" })
+          }}
+          setCart={cart => {
+            dispatch({ type: "SET_CART", value: cart })
+            // dispatch({ type: "SET_VALUE", value: cart, key: "carts" })
+          }}
+        ></Checkout>
+      </Grid>
+    )
+  }
   return (
     <ThemeContext.Provider value={isDarkTheme}>
       <Routes>
@@ -241,6 +267,10 @@ function App() {
           element={<PrivateRoute>{renderDetail()}</PrivateRoute>}
         ></Route>
         <Route path="/cart" element={<PrivateRoute>{renderCart()}</PrivateRoute>}></Route>
+        <Route
+          path="/check-out"
+          element={<PrivateRoute>{renderCheckout()}</PrivateRoute>}
+        ></Route>
       </Routes>
     </ThemeContext.Provider>
   )

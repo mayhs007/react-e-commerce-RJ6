@@ -2,7 +2,7 @@ import Cookies from "js-cookie"
 import React, { useContext, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { Icon, Label, Menu, Radio } from "semantic-ui-react"
-import ThemeContext from "../ThemeContext"
+import ThemeContext from "../../context/ThemeContext"
 import "./NavBar.css"
 const NavBar = ({ carts, setIsDarkTheme }) => {
   const isDarkTheme = useContext(ThemeContext)

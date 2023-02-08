@@ -41,6 +41,7 @@ const reducer = (state, action) => {
 const Users = () => {
   const [state, dispatch] = useReducer(reducer, initalState)
   const [searchParams, setSearchParams] = useSearchParams()
+
   const API_URL =
     process.env.REACT_APP_API_PROTOCOL +
     process.env.REACT_APP_API_HOST +

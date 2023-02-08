@@ -293,6 +293,7 @@ function App() {
           path="/check-out"
           element={<PrivateRoute>{renderCheckout()}</PrivateRoute>}
         ></Route>
+        <Route path="*" element={<div>Not Found...</div>}></Route>
       </Routes>
     </ThemeContext.Provider>
   )

@@ -11,6 +11,8 @@ import { PrivateRoute } from "./Route/PrivateRoute"
 import Detail from "./components/Detail/Detail"
 import Cart from "./components/Cart/Cart"
 import Checkout from "./components/Checkout/Checkout"
+import { Footer } from "./components/Footer/Footer"
+import Users from "./components/Users/Users"
 const initialState = {
   fruitObjects: [],
   carts: [],
@@ -201,6 +203,7 @@ function App() {
             // dispatch({ type: "SET_VALUE", value: cart, key: "carts" })
           }}
         ></Detail>
+        {renderFooter()}
       </Grid>
     )
   }
@@ -254,9 +257,28 @@ function App() {
       </Grid>
     )
   }
+  const renderFooter = () => {
+    // console.log("Hello")
+    return <Footer></Footer>
+  }
+  const renderUsers = () => {
+    return (
+      <Grid
+        style={
+          isDarkTheme ? { backgroundColor: "#282C34" } : { backgroundColor: "#f2f2f2" }
+        }
+      >
+        <Grid.Row>
+          <NavBar carts={state.carts} setIsDarkTheme={setIsDarkTheme}></NavBar>
+        </Grid.Row>
+        <Users></Users>
+      </Grid>
+    )
+  }
   return (
     <ThemeContext.Provider value={isDarkTheme}>
       <Routes>
+        <Route path="/users" element={renderUsers()}></Route>
         <Route path="/login" element={<Login></Login>}></Route>
         <Route
           path="/shop"
